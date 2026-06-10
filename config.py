@@ -55,27 +55,23 @@ sec_key = _get_env(
 )
 
 # Telegram Settings
+tg_token = _get_env("TG_TOKEN", "")  # Bot token. Get it from @Botfather
+channel = _get_env("CHANNEL", "")  # Channel ID (ex. -1001487568087)
 send_telegram_alerts = _get_bool_env("SEND_TELEGRAM_ALERTS", False)
 if send_telegram_alerts:
-    _validate_required_env("Telegram", ("TG_TOKEN", "CHANNEL"))
-tg_token = _get_env("TG_TOKEN", "")  # Bot token. Get it from @Botfather
-channel = _get_int_env("CHANNEL", 0)  # Channel ID (ex. -1001487568087)
+    _validate_required_env("Telegram", ("TG_TOKEN",))
 
 # Discord Settings
-send_discord_alerts = _get_bool_env("SEND_DISCORD_ALERTS", False)
-if send_discord_alerts:
-    _validate_required_env("Discord", ("DISCORD_WEBHOOK",))
 discord_webhook = _get_env(
     "DISCORD_WEBHOOK", ""
 )  # Discord Webhook URL (https://support.discordapp.com/hc/de/articles/228383668-Webhooks-verwenden)
+send_discord_alerts = _get_bool_env("SEND_DISCORD_ALERTS", False)
 
 # Slack Settings
-send_slack_alerts = _get_bool_env("SEND_SLACK_ALERTS", False)
-if send_slack_alerts:
-    _validate_required_env("Slack", ("SLACK_WEBHOOK",))
 slack_webhook = _get_env(
     "SLACK_WEBHOOK", ""
 )  # Slack Webhook URL (https://api.slack.com/messaging/webhooks)
+send_slack_alerts = _get_bool_env("SEND_SLACK_ALERTS", False)
 
 # Twitter Settings
 send_twitter_alerts = _get_bool_env("SEND_TWITTER_ALERTS", False)
@@ -96,8 +92,6 @@ if send_email_alerts:
         (
             "EMAIL_SENDER",
             "EMAIL_RECEIVERS",
-            "EMAIL_SUBJECT",
-            "EMAIL_PORT",
             "EMAIL_HOST",
             "EMAIL_USER",
             "EMAIL_PASSWORD",
@@ -107,7 +101,9 @@ email_sender = _get_env("EMAIL_SENDER", "")  # Your email address
 email_receivers = _get_list_env("EMAIL_RECEIVERS", [])  # Receivers, can be multiple
 email_subject = _get_env("EMAIL_SUBJECT", "Trade Alert!")
 
-email_port = _get_int_env("EMAIL_PORT", 465)  # SMTP SSL Port (ex. 465)
+email_port = (
+    _get_int_env("EMAIL_PORT", 465) if send_email_alerts else 465
+)  # SMTP SSL Port (ex. 465)
 email_host = _get_env("EMAIL_HOST", "")  # SMTP host (ex. smtp.gmail.com)
 email_user = _get_env("EMAIL_USER", "")  # SMTP Login credentials
 email_password = _get_env("EMAIL_PASSWORD", "")  # SMTP Login credentials
