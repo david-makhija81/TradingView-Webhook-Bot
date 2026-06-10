@@ -91,7 +91,7 @@ All alerts can be instantly sent to Telegram, Discord, Twitter and/or Email.
 
 ### Docker
 1. Clone this repository `git clone https://github.com/fabston/TradingView-Webhook-Bot.git`
-1. Edit and update [`config.py`](https://github.com/fabston/TradingView-Webhook-Bot/blob/master/config.py)
+1. Copy `.env.example` to `.env` and update `.env` with your settings and secrets.
 1. `docker-compose build`
 1. `docker-compose up`
 
